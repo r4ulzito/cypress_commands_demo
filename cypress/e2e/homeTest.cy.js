@@ -1,11 +1,12 @@
 describe("Ao acessar a página inicial", () => {
+    beforeEach(() => {
+        cy.visit("/");
+    });
+
     it("Deve exibir lista de conteudos com títulos referentes ao termo digitado", () => {
         const novoTermo = "Cypress";
 
-        cy.visit("https://wlsf82-hacker-stories.web.app/");
-
-        cy.get("#search").should("be.visible").clear().type(novoTermo);
-        cy.contains("Submit").should("be.visible").click();
+        cy.buscaTermo(novoTermo);
 
         cy.get(".item").contains(novoTermo).should("be.visible");
     });
@@ -14,10 +15,7 @@ describe("Ao acessar a página inicial", () => {
         const antigoTermo = "React";
         const novoTermo = "Test";
 
-        cy.visit("https://wlsf82-hacker-stories.web.app/");
-
-        cy.get("#search").should("be.visible").clear().type(novoTermo);
-        cy.contains("Submit").should("be.visible").click();
+        cy.buscaTermo(novoTermo);
 
         cy.get(".last-searches").within(() => {
             cy.get("button")
